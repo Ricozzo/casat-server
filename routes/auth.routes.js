@@ -128,4 +128,17 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
   res.status(200).json(req.payload);
 });
 
+// GET /auth/logout
+router.get("/logout", (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      res.status(500).render("auth/logout", { errorMessage: err.message });
+      return;
+    }
+
+    res.redirect("/");
+  });
+});
+
+
 module.exports = router;
