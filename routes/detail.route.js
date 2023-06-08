@@ -8,11 +8,11 @@ const Detail = require('../models/Details.model');
 
 // POST '/api/details' route to Create a New Detail
 router.post('/details', async(req,res)=>{
-    const {title, description, eventId } = req.body; 
+    const {title, description, eventId, information } = req.body; 
 
     try{
         // Create a New Detail
-        let newDetail = await Detail.create({title, description, event: eventId});
+        let newDetail = await Detail.create({title, description, information, event: eventId});
 
         // Push a New Detail to a Event
         let response = await Event.findByIdAndUpdate(eventId, {$push: {details: newDetail._id}});

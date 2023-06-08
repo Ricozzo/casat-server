@@ -15,6 +15,7 @@ const eventSchema = new Schema({
     title: String, 
     description: String, 
     imageUrl: String,
+    information: String,
     details: [{type: Schema.Types.ObjectId, ref: 'Detail'}]
 })
 

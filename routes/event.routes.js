@@ -26,7 +26,7 @@ router.post("/upload", fileUploader.single("imageUrl"), (req, res, next) => {
 
 // POST /api/events ROUTE that Creates a new event
 router.post("/events", async (req, res) => {
-  const { title, description, imageUrl } = req.body;
+  const { title, description, imageUrl, information } = req.body;
 
   try {
     // We wait until we have the status of the creation of Event to make the next step
@@ -34,6 +34,7 @@ router.post("/events", async (req, res) => {
       title,
       description,
       imageUrl,
+      information,
       details: [],
     });
     // Send the response as a json file, because we're making an API
@@ -77,7 +78,7 @@ router.get("/events/:eventId", async (req, res) => {
 
 router.put("/events/:eventId", async (req, res) => {
   const { eventId } = req.params;
-  const { title, description } = req.body;
+  const { title, description, information } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(eventId)) {
     res.status(400).json({ message: "Specified Id is not valid" });
@@ -87,7 +88,7 @@ router.put("/events/:eventId", async (req, res) => {
   try {
     let updatedEvent = await Event.findByIdAndUpdate(
       eventId,
-      { title, description },
+      { title, description, information },
       { new: true }
     );
     res.json(updatedEvent);
